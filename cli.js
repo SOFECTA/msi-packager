@@ -67,11 +67,25 @@ var opts = require("nomnom")
       help: 'Run the application after installation completes',
     },
 
+    'shortcut': {
+      abbr: 's',
+      flag: true,
+      full: 'shortcut',
+      help: 'Add shortcut to desktop and menu',
+    },
+
+    'startup': {
+      abbr: 'x',
+      flag: true,
+      full: 'startup',
+      help: 'Register the application to run on startup',
+    },
+
     'localInstall': {
       flag: true,
       full: 'local',
-      help: 'Install per user (no administrator rights required)',
-      abbr: 'l'
+      abbr: 'l',
+      help: 'Install per user (no administrator rights required)'
     }
   }).parse();
 

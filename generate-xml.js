@@ -49,13 +49,15 @@ function installerFor (components, options) {
 
       options.runAfter ? el('Property', {
         Id: "cmd",
-        Value: "cmd.exe"
+        Value: options.startup ? "schtasks.exe" : "cmd.exe"
       }) : "",
 
       options.runAfter ? el('CustomAction', {
         Id: "LaunchApplication",
-        ExeCommand: "/c start \"\" \"%programfiles%\\"+options.name+"\\"+options.executable+"\"",
-        Execute: "immediate",
+        ExeCommand: options.startup
+          ? "/create /tn \""+options.name+"\" /tr \"%programfiles%\\"+options.name+"\\"+options.executable+"\" /f /sc onstart"
+          : "/c start \"\" \"%programfiles%\\"+options.name+"\\"+options.executable+"\"",
+        Execute: options.startup ? "deferred" : "immediate",
         Property: "cmd",
         Impersonate: "yes",
         Return: "asyncNoWait"
@@ -154,7 +156,7 @@ function getComponents (path, options, cb) {
             })
           ]
 
-          if (subPath === options.executable) {
+          if (options.shorcut  === true && subPath === options.executable) {
             items.push(el('Shortcut', {
               Id: 'StartMenuShortcut',
               Advertise: 'yes',

@@ -55,7 +55,7 @@ function installerFor (components, options) {
       options.runAfter ? el('CustomAction', {
         Id: "LaunchApplication",
         ExeCommand: "/c start \"\" \"%programfiles%\\"+options.name+"\\"+options.executable+"\"",
-        Execute: "deferred",
+        Execute: "immediate",
         Property: "cmd",
         Impersonate: "yes",
         Return: "asyncNoWait"

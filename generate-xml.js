@@ -67,7 +67,10 @@ function installerFor (components, options) {
         el('RemoveExistingProducts', {
           Before: "InstallInitialize" 
         }),
-        options.runAfter ? el('Custom', {
+        options.runAfter ? el('Custom', options.startup ? {
+          Action: 'LaunchApplication',
+          Before: 'InstallFinalize'
+        } : {
           Action: 'LaunchApplication',
           After: 'InstallFinalize'
         }, ["NOT Installed"]) : ""

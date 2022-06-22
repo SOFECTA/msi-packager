@@ -47,10 +47,28 @@ function installerFor (components, options) {
         })
       ]),
 
+      options.runAfter ? el('Property', {
+        Id: "cmd",
+        Value: "cmd.exe"
+      }) : "",
+
+      options.runAfter ? el('CustomAction', {
+        Id: "LaunchApplication",
+        ExeCommand: "/c start \"\" \"%programfiles%\\"+options.name+"\\"+options.executable+"\"",
+        Execute: "deferred",
+        Property: "cmd",
+        Impersonate: "yes",
+        Return: "asyncNoWait"
+      }) : "",
+
       el('InstallExecuteSequence', [
         el('RemoveExistingProducts', {
           Before: "InstallInitialize" 
         }),
+        options.runAfter ? el('Custom', {
+          Action: 'LaunchApplication',
+          After: 'InstallFinalize'
+        }, ["NOT Installed"]) : ""
       ]),
 
       el('Package', {

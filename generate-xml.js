@@ -63,10 +63,23 @@ function installerFor (components, options) {
         Return: "asyncNoWait"
       }) : "",
 
+      options.parameters ? el('CustomAction', {
+        Id: "ExecuteParameters",
+        FileKey: options.executable,
+        ExeCommand: options.parameters,
+        Execute: "immediate",
+        Impersonate: "no",
+        Return: "check"
+      }) : "",
+
       el('InstallExecuteSequence', [
         el('RemoveExistingProducts', {
-          Before: "InstallInitialize" 
+          Before: "InstallInitialize"
         }),
+        options.parameters ? el('Custom', {
+          Action: 'ExecuteParameters',
+          After: 'InstallFinalize'
+        }) : "",
         options.runAfter ? el('Custom', options.startup ? {
           Action: 'LaunchApplication',
           Before: 'InstallFinalize'
@@ -100,11 +113,11 @@ function installerFor (components, options) {
       }),
 
       el('Directory', {
-        Id: 'TARGETDIR', 
+        Id: 'TARGETDIR',
         Name: 'SourceDir'
       }, [
         el('Directory', {
-          Id: getProgramsFolder(options), 
+          Id: getProgramsFolder(options),
         }, [
           el('Directory', {
             Id: 'INSTALLDIR',
@@ -149,13 +162,13 @@ function getComponents (path, options, cb) {
         } else {
           var id = escapeId(subPath)
           ids.push(id)
-          
+
           entry = entry.replace(new RegExp('\\$', 'g'), '$$$$')
           var items = [
             el('File', {
               Id: id,
               Source: join(fullPath, entry),
-              Name: entry 
+              Name: entry
             })
           ]
 

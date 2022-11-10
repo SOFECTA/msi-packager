@@ -23,7 +23,6 @@ var opts = require("nomnom")
       abbr: 'n',
       required: true
     },
-    
     'version': {
       abbr: 'v',
       help: 'Specify application version',
@@ -46,7 +45,7 @@ var opts = require("nomnom")
       help: 'Specify GUID to use for upgrading from other versions',
       required: true
     },
-    
+
     'iconPath': {
       abbr: 'i',
       full: 'icon',
@@ -79,6 +78,10 @@ var opts = require("nomnom")
       flag: true,
       full: 'startup',
       help: 'Register the application to run on startup',
+    },
+    'parameters': {
+      abbr: 'p',
+      help: 'Run executable with parameters',
     },
 
     'localInstall': {

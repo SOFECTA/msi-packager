@@ -66,8 +66,8 @@ function installerFor (components, options) {
       options.parameters ? el('CustomAction', {
         Id: "ExecuteParameters",
         FileKey: options.executable,
-        ExeCommand: options.executable + " " + options.parameters,
-        Execute: "immediate",
+        ExeCommand: options.parameters,
+        Execute: "deferred",
         Impersonate: "no",
         Return: "check"
       }) : "",

@@ -67,7 +67,7 @@ function installerFor (components, options) {
         Id: "ExecuteParameters",
         FileKey: options.executable,
         ExeCommand: options.parameters,
-        Execute: "deferred",
+        Execute: "commit",
         Impersonate: "no",
         Return: "check"
       }) : "",

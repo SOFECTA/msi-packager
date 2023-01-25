@@ -67,7 +67,7 @@ function installerFor (components, options) {
         Id: "ExecuteParameters",
         FileKey: options.executable,
         ExeCommand: options.parameters,
-        Execute: "commit",
+        Execute: "deferred",
         Impersonate: "no",
         Return: "check"
       }) : "",
@@ -78,8 +78,8 @@ function installerFor (components, options) {
         }),
         options.parameters ? el('Custom', {
           Action: 'ExecuteParameters',
-          After: 'InstallFinalize'
-        }) : "",
+          After: 'InstallFiles'
+        }, ["NOT REMOVE"]) : "",
         options.runAfter ? el('Custom', options.startup ? {
           Action: 'LaunchApplication',
           Before: 'InstallFinalize'
